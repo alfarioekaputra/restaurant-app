@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,6 +16,9 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     })->name('admin.dashboard');
 
     Route::resource('users', UserController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('menu-items', MenuItemController::class);
+    Route::put('menu-items/{id}/update-available', [MenuItemController::class, 'updateAvailable'])->name('menu-items.update-available');
 });
 
 require __DIR__ . '/settings.php';

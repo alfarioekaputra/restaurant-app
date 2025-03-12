@@ -11,7 +11,7 @@ import UserEditForm from './UserEditForm.vue';
 
 const props = defineProps<{
   show: boolean;
-  userId?: number;
+  primaryKey: number;
   isEdit?: boolean;
 }>();
 
@@ -41,7 +41,7 @@ const handleSaved = () => {
       
       <UserEditForm 
         :show="show" 
-        :userId="userId" 
+        :primaryKey="primaryKey" 
         :isEdit="isEdit"
         @close="handleClose"
         @saved="handleSaved"

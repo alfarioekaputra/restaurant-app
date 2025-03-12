@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/select';
 
 const props = defineProps<{
-  userId?: number;
+  primaryKey?: number;
   show: boolean;
   isEdit?: boolean;
 }>();
@@ -39,7 +39,7 @@ const form = useForm({
 
 // Define fetchUserData function before using it in watch callbacks
 const fetchUserData = async () => {
-  if (!props.userId) {
+  if (!props.primaryKey) {
     // Reset form for new user
     form.name = '';
     form.email = '';
@@ -50,7 +50,7 @@ const fetchUserData = async () => {
   
   loading.value = true;
   try {
-    const response = await axios.get(route('users.edit', {id: props.userId}));
+    const response = await axios.get(route('users.edit', {id: props.primaryKey}));
     user.value = response.data;
     
     // Populate form with user data
@@ -87,22 +87,22 @@ watch(() => props.show, async (newValue) => {
   }
 }, { immediate: true });
 
-// Fetch user data when userId changes
-watch(() => props.userId, async (newValue) => {
+// Fetch user data when primaryKey changes
+watch(() => props.primaryKey, async (newValue) => {
   if (props.show) {
     await fetchUserData();
   }
 });
 
 const submit = () => {
-  if (props.isEdit && props.userId) {
+  if (props.isEdit && props.primaryKey) {
     // Update existing user
     // If password is empty, remove it from the form data
     if (!form.password) {
       form.delete('password');
     }
     
-    form.put(route('users.update', {id: props.userId}), {
+    form.put(route('users.update', {id: props.primaryKey}), {
       onSuccess: () => {
         showSuccess(`User ${form.name} has been updated successfully`);
         emit('saved');

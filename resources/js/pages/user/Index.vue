@@ -3,7 +3,7 @@ import Datatable from '@/components/datatable/Datatable.vue';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { User, type BreadcrumbItem } from '@/types';
-import { userColumns } from '@/types/user';
+import { userColumns } from '@/types/table/userColumn';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import { Button } from '@/components/ui/button';
@@ -87,7 +87,7 @@ const handleUserSaved = () => {
             <!-- User Form Modal -->
             <UserFormModal
                 :show="showUserModal"
-                :userId="selectedUserId"
+                :primaryKey="selectedUserId"
                 :isEdit="isEditMode"
                 @close="handleModalClose"
                 @saved="handleUserSaved"

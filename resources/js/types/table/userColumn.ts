@@ -1,20 +1,20 @@
 import { ColumnDef } from '@tanstack/vue-table';
-import { User } from '.';
+import { User } from '..';
 import DataTableDropDown from '@/components/datatable/DataTableDropDown.vue';
 import { h } from 'vue';
 
 export const userColumns: ColumnDef<User>[] = [
   {
     accessorKey: 'email',
-    header: () => 'Email',
+    header: 'Email',
   },
   {
     accessorKey: 'name',
-    header: () => 'Name',
+    header: 'Name',
   },
   {
     id: 'role',
-    header: () => 'Role',
+    header: 'Role',
     cell: ({ row }) => {
       const user = row.original;
       // Get roles from the user model
@@ -26,7 +26,7 @@ export const userColumns: ColumnDef<User>[] = [
   },
   {
     accessorKey: 'actions',
-    header: () => '',
+    header: '',
     cell: ({ row }) => {
       const user = row.original;
       return h(DataTableDropDown, {

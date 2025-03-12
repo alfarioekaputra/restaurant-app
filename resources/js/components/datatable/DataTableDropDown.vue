@@ -7,53 +7,52 @@ import { ref } from 'vue'
 import UserFormModal from '@/components/user/UserFormModal.vue'
 import { showConfirm, showSuccess } from '@/utils/notifications'
 
-const props = defineProps<{
-  editUrl: string
-  deleteUrl: string
-  userId: number
+defineProps<{
+  onEdit: () => void;
+  onDelete: () => void;
 }>()
 
-const showEditModal = ref(false)
+const emit = defineEmits(['edit', 'delete']);
 
-const handleEdit = () => {
-  showEditModal.value = true
-}
+// const handleEdit = () => {
+//   emit('edit')
+// }
 
-const handleDelete = () => {
-  showConfirm(
-    "You won't be able to revert this!",
-    'Are you sure?',
-    'Yes, delete it!',
-    'Cancel'
-  ).then((result) => {
-    if (result.isConfirmed) {
-      router.delete(route('users.destroy', {id: props.userId}), {
-        onSuccess: () => {
-          showSuccess('The user has been deleted.', 'Deleted!');
-        }
-      })
-    }
-  })
-}
+// const handleDelete = () => {
+//   showConfirm(
+//     "You won't be able to revert this!",
+//     'Are you sure?',
+//     'Yes, delete it!',
+//     'Cancel'
+//   ).then((result) => {
+//     if (result.isConfirmed) {
+//       router.delete(route('users.destroy', {id: props.primaryKey}), {
+//         onSuccess: () => {
+//           showSuccess('The user has been deleted.', 'Deleted!');
+//         }
+//       })
+//     }
+//   })
+// }
 
-const handleModalClose = () => {
-  showEditModal.value = false
-}
+// const handleModalClose = () => {
+//   showEditModal.value = false
+// }
 
-const handleUserSaved = () => {
-  // Modal will be closed by the form component
-}
+// const handleUserSaved = () => {
+//   // Modal will be closed by the form component
+// }
 </script>
 
 <template>
   <!-- User Edit Modal -->
-  <UserFormModal
+  <!-- <UserFormModal
     :show="showEditModal"
-    :userId="userId"
+    :primaryKey="primaryKey"
     :isEdit="true"
     @close="handleModalClose"
     @saved="handleUserSaved"
-  />
+  /> -->
 
   <DropdownMenu>
     <DropdownMenuTrigger as-child>
@@ -64,11 +63,11 @@ const handleUserSaved = () => {
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end">
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
-      <DropdownMenuItem @click="handleEdit">
+      <DropdownMenuItem @click="onEdit">
         Edit
       </DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem class="text-red-600" @click="handleDelete">
+      <DropdownMenuItem class="text-red-600" @click="onDelete">
         Delete
       </DropdownMenuItem>
     </DropdownMenuContent>

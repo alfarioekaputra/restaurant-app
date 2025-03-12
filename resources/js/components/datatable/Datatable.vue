@@ -28,20 +28,11 @@ import {
 
 import { ref, watch } from 'vue'
 import { Button } from '@/components/ui/button'
+import { Meta } from '@/types'
 
 const props = withDefaults(defineProps<{
   columns: ColumnDef<TData, TValue>[]
-  meta: {
-    data: TData[]
-    current_page: number
-    from: number
-    last_page: number
-    links: any[]
-    path: string
-    per_page: number
-    to: number
-    total: number
-  }
+  meta: Meta
   filters: {
     search: string
     per_page: number
@@ -201,7 +192,7 @@ const handleFilter = (filterData: { value: string; type: string; search: string 
         <TableHeader>
           <TableRow>
             <TableHead v-for="column in table.getAllColumns()" :key="column.id">
-              {{ column.columnDef.header?.() }}
+              {{ column.columnDef.header }}
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -234,7 +225,7 @@ const handleFilter = (filterData: { value: string; type: string; search: string 
         <div class="text-sm text-gray-500">
           Showing {{ meta.from || 0 }} to {{ meta.to || 0 }} of {{ meta.total }} entries
         </div>
-        <Pagination v-if="meta.last_page > 1">
+        <Pagination v-if="meta.last_page > 1" :items-per-page="10" :total="meta.total" show-edges>
           <PaginationList class="flex items-center gap-1">
             <PaginationPrev 
             :disabled="meta.current_page === 1"

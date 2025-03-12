@@ -76,22 +76,27 @@ watch(() => props.modelValue, (newValue) => {
   selectedValue.value = newValue
 })
 
-const handleSelect = (value: string) => {
-  selectedValue.value = value
-  emit('update:modelValue', value)
-  emit('filter', {
-    value,
-    type: 'select',
-    search: searchQuery.value
-  })
+const handleSelect = (value: unknown) => {
+  if (typeof value === 'string' || typeof value === 'number') {
+    selectedValue.value = String(value)
+    emit('update:modelValue', String(value))
+    emit('filter', {
+      value: String(value),
+      type: 'select',
+      search: searchQuery.value
+    })
+  } else {
+    console.warn('Unexpected value type:', value)
+  }
 }
 
-const handleSearch = (value: string) => {
-  searchQuery.value = value
+
+const handleSearch = (value: string | number) => {
+  searchQuery.value = String(value)
   emit('filter', {
     value: selectedValue.value,
     type: 'search',
-    search: value
+    search: String(value)
   })
 }
 </script>

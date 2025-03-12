@@ -40,3 +40,15 @@ export interface User {
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;
+
+export interface Meta {
+    data: []
+    current_page: number
+    from: number
+    last_page: number
+    links: any[]
+    path: string
+    per_page: number
+    to: number
+    total: number
+}
